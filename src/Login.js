@@ -1,6 +1,6 @@
 // src/Login.js
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from './api';
 
 const Login = ({ onLogin }) => {
     const [username, setUsername] = useState('');
@@ -14,10 +14,10 @@ const Login = ({ onLogin }) => {
 
         try {
             if (isSignUp) {
-                await axios.post('/api/users/register', { username, password });
+                await api.post('/api/users/register', { username, password });
                 setIsSignUp(false);
             } else {
-                const response = await axios.post('/api/users/login', {
+                const response = await api.post('/api/users/login', {
                     username,
                     password,
                 });

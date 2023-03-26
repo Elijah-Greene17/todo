@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from './api';
 import Login from './Login';
 import './myParagraph.css';
 
@@ -17,7 +17,7 @@ const TodoList = () => {
     };
 
     const fetchTodos = async () => {
-        const response = await axios.get('/api/todos');
+        const response = await api.get('/api/todos');
         setTodos(response.data);
     };
 
@@ -25,12 +25,12 @@ const TodoList = () => {
         if (!input.trim()) return;
 
         const newTodo = { task: input, completed: false };
-        const response = await axios.post('/api/todos', newTodo);
+        const response = await api.post('/api/todos', newTodo);
         setTodos([...todos, response.data]);
         setInput('');
     };
     const updateTodo = async (id, completed) => {
-        const updatedTodo = await axios.put(`/api/todos/${id}`, {
+        const updatedTodo = await api.put(`/api/todos/${id}`, {
             completed: !completed,
         });
         setTodos(
@@ -39,7 +39,7 @@ const TodoList = () => {
     };
 
     const deleteTodo = async (id) => {
-        await axios.delete(`/api/todos/${id}`);
+        await api.delete(`/api/todos/${id}`);
         setTodos(todos.filter((todo) => todo._id !== id));
     };
 
